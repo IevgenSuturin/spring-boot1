@@ -1,22 +1,42 @@
 package com.isut.springboot1.dao;
 
-public class StudentDto {
-    protected StudentDto(){}
+import java.util.HashSet;
+import java.util.Set;
 
-    public StudentDto(Student student){
-        Id=student.getId();
-        firstName=student.getFirstName();
-        lastName=student.getLastName();
+public class StudentDto {
+    protected StudentDto() {
     }
-    private long Id;
+
+    public StudentDto(Student student) {
+        Id = student.getId();
+        firstName = student.getFirstName();
+        lastName = student.getLastName();
+        for (Address address : student.getAddress()) {
+            this.addresses.add(new AddressDto(address));
+        }
+    }
+
+    public StudentDto(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public StudentDto(String firstName, String lastName, String city, String street, String state, String zip) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        addresses.add(new AddressDto(city, street, state, zip));
+    }
+
+    private Long Id;
     private String firstName;
     private String lastName;
+    private Set<AddressDto> addresses = new HashSet<>();
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         Id = id;
     }
 
@@ -35,4 +55,14 @@ public class StudentDto {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Set<AddressDto> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<AddressDto> addresses) {
+        this.addresses = addresses;
+    }
 }
+
+
